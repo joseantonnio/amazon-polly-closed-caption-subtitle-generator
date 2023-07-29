@@ -4,7 +4,11 @@ from .vtt import VTT
 
 class PollyVTT:
     def __init__(self, **kwargs):
-        self.polly = Polly()
+        self.polly = Polly(
+            AwsRegionName=kwargs.get('AwsRegionName'),
+            AwsAccessKeyId=kwargs.get('AwsAccessKeyId'),
+            AwsSecretAccessKey=kwargs.get('AwsSecretAccessKey')
+        )
 
     def generate(self, filename, format="vtt", **polly_params):
         resp, filename, length = self.polly.synthesize(filename, **polly_params)

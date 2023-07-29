@@ -6,7 +6,12 @@ import librosa
 
 class Polly:
     def __init__(self, **kwargs):
-        self.client = boto3.client("polly")
+        boto3.setup_default_session(region_name=kwargs.get('AwsRegionName'))
+        self.client = boto3.client(
+            "polly",
+            aws_access_key_id=kwargs.get('AwsAccessKeyId'),
+            aws_secret_access_key=kwargs.get('AwsSecretAccessKey'),
+        )
         self.defaults = {
             "Engine": "neural",
             "LanguageCode": "en-US",
